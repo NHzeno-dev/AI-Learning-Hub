@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Learning Hub</title><meta name="description" content="Nền tảng hỗ trợ học tập và trợ lý AI cho học sinh.">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+
+<div id="authPage" class="auth-page">
+  <div class="auth-card">
+    <div class="brand">✦ AI Learning Hub</div><p class="eyebrow">Nền tảng học tập cộng đồng</p>
+    <div class="auth-tabs"><button class="tab active" id="loginTab">Đăng nhập</button><button class="tab" id="registerTab">Đăng ký</button></div>
+    <form id="loginForm"><h1>Chào mừng trở lại 👋</h1><p class="muted">Đăng nhập để tiếp tục học tập.</p>
+      <label>Email</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="ban@example.com">
+      <label>Mật khẩu</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••">
+      <button class="primary full btn-animate" type="submit">Đăng nhập</button><p id="loginMessage" class="form-message"></p>
+    </form>
+    <form id="registerForm" class="hidden"><h1>Tạo tài khoản 🚀</h1><p class="muted">Tài khoản riêng giúp lưu tiến độ của bạn.</p>
+      <label>Họ và tên</label><input id="registerName" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Nguyễn Văn A">
+      <label>Email</label><input id="registerEmail" type="email" autocomplete="email" required placeholder="ban@example.com">
+      <label>Mật khẩu</label><input id="registerPassword" type="password" autocomplete="new-password" required minlength="6" placeholder="Tối thiểu 6 ký tự">
+      <label>Nhập lại mật khẩu</label><input id="registerConfirm" type="password" autocomplete="new-password" required placeholder="Nhập lại mật khẩu">
+      <button class="primary full btn-animate" type="submit">Tạo tài khoản</button><p id="registerMessage" class="form-message"></p>
+    </form>
+  </div>
+</div>
+
+<div id="appPage" class="hidden">
+<aside class="sidebar"><div class="brand">✦ AI Learning Hub</div>
+<nav>
+<button class="nav active btn-animate" data-section="home">🏠 <span>Trang chủ</span></button>
+<button class="nav btn-animate" data-section="chat">🤖 <span>AI học tập</span></button>
+<button class="nav btn-animate" data-section="materials">📚 <span>Kho tài liệu</span></button>
+<button class="nav btn-animate" data-section="tasks">📝 <span>Bài tập</span></button>
+<button class="nav btn-animate" data-section="plan">📅 <span>Kế hoạch học</span></button>
+<button class="nav btn-animate" data-section="profile">👤 <span>Cá nhân</span></button>
+</nav>
+<div class="sidebar-bottom"><button id="themeBtn" class="btn-animate">🌙 Giao diện</button><button id="logoutBtn" class="btn-animate">🚪 Đăng xuất</button><small>AI Learning Hub v6</small></div></aside>
+
+<main class="main"><header class="topbar"><div><span class="eyebrow">Tài khoản đã xác thực</span><h1 id="welcomeTitle">Xin chào 👋</h1></div><div class="profile-pill"><span id="profileInitial">U</span><span id="profileName">User</span></div></header>
+
+<section id="home" class="section active-section">
+<div class="hero"><div><span class="pill">HỌC TẬP • KẾT NỐI • PHÁT TRIỂN</span><h2>Không gian học tập<br><span>của bạn.</span></h2><p>Hỏi trợ lý học tập, quản lý bài tập, lưu tài liệu và theo dõi tiến độ trong một nơi.</p><button class="light-btn btn-animate" data-go="chat">💬 Bắt đầu chat AI</button></div><div class="hero-orb">✦</div></div>
+<div class="stats"><div class="card-hover"><b id="statDone">0</b><span>Bài hoàn thành</span></div><div class="card-hover"><b id="statMaterials">0</b><span>Tài liệu</span></div><div class="card-hover"><b id="statTasks">0</b><span>Bài tập đang làm</span></div></div>
+<div class="grid2"><div class="panel card-hover"><h3>⚡ Truy cập nhanh</h3><div class="quick"><button class="quick-btn btn-animate" data-go="chat">🤖 Hỏi AI</button><button class="quick-btn btn-animate" data-go="tasks">📝 Thêm bài tập</button><button class="quick-btn btn-animate" data-go="materials">📚 Xem tài liệu</button></div></div>
+<div class="panel card-hover"><h3>📈 Tiến độ</h3><div class="progress"><div id="progressBar"></div></div><strong id="progressText">0%</strong><p class="muted">Hoàn thành bài tập để tăng tiến độ.</p></div></div>
+</section>
+
+<section id="chat" class="section"><div class="section-head"><div><span class="eyebrow">TRỢ LÝ HỌC TẬP</span><h2>🤖 AI học tập</h2><p class="muted">Trợ lý tích hợp sẵn, không cần API key ở trình duyệt.</p></div><button id="clearChat" class="secondary btn-animate">Xóa đoạn chat</button></div>
+<div class="chat-box panel"><div id="messages" class="messages"><div class="msg bot"><b>AI Learning Hub</b><br>Xin chào! Bạn có thể hỏi mình về bài học, lập kế hoạch hoặc cách học.</div></div>
+<form id="chatForm" class="chat-form"><input id="chatInput" maxlength="1000" required placeholder="Ví dụ: Giải thích định luật Ôm cho mình..."><button class="primary btn-animate" type="submit">Gửi ➤</button></form></div></section>
+
+<section id="materials" class="section"><div class="section-head">
+<div><span class="eyebrow">KHO TÀI LIỆU • MONGODB</span><h2>📚 Kho tài liệu của tôi</h2>
+<p class="muted">Tất cả tài liệu đã upload được lưu trên server và gắn với tài khoản của bạn.</p></div>
+<button id="refreshLibrary" class="secondary btn-animate">↻ Làm mới</button></div>
+
+<div class="library-stats">
+  <div class="panel"><b id="libraryCount">0</b><span>Tài liệu</span></div>
+  <div class="panel"><b id="librarySize">0 MB</b><span>Dung lượng</span></div>
+  <div class="panel"><b id="libraryFolders">0</b><span>Thư mục</span></div>
+</div>
+
+<div class="panel library-toolbar">
+  <div class="search-large"><input id="librarySearch" type="search" placeholder="🔎 Tìm tên tài liệu, tiêu đề, mô tả hoặc tag..."></div>
+  <select id="librarySubject"><option value="">Tất cả môn học</option></select>
+  <select id="libraryFolder"><option value="">Tất cả thư mục</option></select>
+  <select id="librarySort">
+    <option value="newest">Mới nhất</option>
+    <option value="oldest">Cũ nhất</option>
+    <option value="name">Tên A → Z</option>
+    <option value="size">Dung lượng lớn → nhỏ</option>
+  </select>
+</div>
+
+<div class="panel library-upload">
+  <div><h3>📤 Thêm tài liệu vào kho</h3><p class="muted">PDF, DOCX, PPTX, JPG, PNG • tối đa 10 MB/file</p></div>
+  <form id="libraryUploadForm" class="library-upload-form">
+    <input id="libraryTitle" maxlength="150" required placeholder="Tiêu đề tài liệu">
+    <select id="librarySubjectInput" required><option value="">Môn học</option>
+      <option>Toán</option><option>Ngữ văn</option><option>Tiếng Anh</option><option>Vật lý</option>
+      <option>Hóa học</option><option>Sinh học</option><option>Lịch sử</option><option>Địa lý</option><option>Tin học</option>
+    </select>
+    <input id="libraryFolderInput" maxlength="80" placeholder="Thư mục, ví dụ: Toán 11">
+    <input id="libraryTagsInput" maxlength="300" placeholder="Tag, cách nhau bằng dấu phẩy">
+    <input id="libraryDescriptionInput" maxlength="1000" placeholder="Mô tả ngắn">
+    <input id="libraryFile" type="file" accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png" required>
+    <button class="primary btn-animate" type="submit">📤 Thêm vào kho</button>
+  </form>
+  <div id="libraryUploadMessage" class="form-message"></div>
+</div>
+
+<div id="libraryList" class="library-grid"></div>
+<div id="libraryEmpty" class="empty-state hidden"><div>📂</div><h3>Kho tài liệu đang trống</h3><p>Hãy upload tài liệu đầu tiên.</p></div>
+
+<div id="aiDocumentPanel" class="ai-document-panel hidden">
+  <div class="ai-document-head">
+    <div><span class="eyebrow">AI HỌC TẬP</span><h3 id="aiDocumentTitle">AI với tài liệu</h3><p id="aiDocumentFile" class="muted"></p></div>
+    <button id="closeAiDocument" class="secondary">✕ Đóng</button>
+  </div>
+  <div class="ai-actions">
+    <button data-ai-action="summary" class="primary btn-animate">📝 Tóm tắt</button>
+    <button data-ai-action="explain" class="secondary btn-animate">🧠 Giải thích</button>
+    <button data-ai-action="questions" class="secondary btn-animate">❓ Tạo câu hỏi</button>
+    <button data-ai-action="flashcards" class="secondary btn-animate">🗂️ Flashcard</button>
+  </div>
+  <form id="aiAskForm" class="ai-ask-form">
+    <input id="aiAskInput" maxlength="5000" placeholder="Hỏi AI về tài liệu này...">
+    <button class="primary btn-animate">Gửi</button>
+  </form>
+  <div id="aiDocumentStatus" class="form-message"></div>
+  <div id="aiDocumentResult" class="ai-result"><p class="muted">Chọn một tác vụ AI để bắt đầu.</p></div>
+</div>
+</section>
+
+<section id="tasks" class="section"><div class="section-head"><div><span class="eyebrow">QUẢN LÝ VIỆC HỌC</span><h2>📝 Bài tập</h2></div></div>
+<div class="panel"><form id="taskForm" class="inline-form"><input id="taskInput" maxlength="120" required placeholder="Nhập bài tập cần làm..."><input id="taskDate" type="date"><button class="primary btn-animate">Thêm</button></form><div id="taskList" class="list"></div></div></section>
+
+<section id="plan" class="section"><div class="section-head"><div><span class="eyebrow">TẬP TRUNG</span><h2>📅 Kế hoạch học</h2></div></div>
+<div class="grid2"><div class="panel"><h3>⏱️ Pomodoro</h3><div class="timer" id="timer">25:00</div><div class="quick"><button id="startTimer" class="primary btn-animate">Bắt đầu</button><button id="resetTimer" class="secondary btn-animate">Đặt lại</button></div></div>
+<div class="panel"><h3>🎯 Mục tiêu hôm nay</h3><textarea id="dailyGoal" rows="6" placeholder="Ví dụ: Ôn Toán 30 phút, làm 2 bài Hóa..."></textarea><button id="saveGoal" class="primary btn-animate">Lưu mục tiêu</button></div></div></section>
+
+<section id="profile" class="section"><div class="section-head"><div><span class="eyebrow">TÀI KHOẢN</span><h2>👤 Cá nhân</h2></div></div>
+<div class="panel profile-card"><div class="big-avatar" id="bigAvatar">U</div><div><h3 id="profileFullName">User</h3><p id="profileEmail" class="muted">email</p><span class="pill dark-pill" id="accountRole">USER</span></div></div>
+<div class="panel danger"><h3>⚠️ Dữ liệu trên thiết bị</h3><p class="muted">Xóa bài tập và mục tiêu trên thiết bị này. Tài liệu trong Kho tài liệu được lưu trên máy chủ MongoDB.</p><button id="clearLocal" class="danger-btn btn-animate">Xóa dữ liệu học tập</button></div></section>
+</main></div>
+<script src="app.js"></script>
+</body></html>
